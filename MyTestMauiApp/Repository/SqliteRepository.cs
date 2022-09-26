@@ -4,7 +4,7 @@ using System;
 
 namespace MyTestMauiApp.Repository
 {
-    public static class SqliteRepository<T>
+    public static class SqliteRepository<T> where T : new()
     {
         private static SQLiteAsyncConnection db;
 

@@ -1,34 +1,35 @@
 ﻿using MyTestMauiApp.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
+using MyTestMauiApp.Repository;
 
 namespace MyTestMauiApp.Services
 {
     public class CatService
     {
-        HttpClient client;
+        public IEnumerable<Cat> catList;
 
-        public CatService()
+        public async Task<IEnumerable<Cat>> GetCats()
         {
-            client = new HttpClient();
-        }
-
-        List<Cat> catList = new();
-
-        public async Task<List<Cat>> GetCats()
-        {
-            // need try logic for Ditto implementation
-            if (catList?.Count > 0)
+            if (catList.Count() > 0)
             {
                 return catList;
             }
 
-            return null;
+            catList = await SqliteRepository<Cat>.GetData();
+
+            return catList;
+        }
+
+        public async void AddCat(Cat cat)
+        {
+            if (cat != null)
+            {
+                await SqliteRepository<Cat>.AddData(cat);
+            }
+        }
+
+        public async void DeleteCat(Cat cat)
+        {
+            await SqliteRepository<Cat>.RemoveData(cat.Id);
         }
     }
 }
