@@ -21,7 +21,7 @@ namespace MyTestMauiApp.Services
 
         public async void AddCat(Cat cat)
         {
-            if (cat != null && cat.Name != String.Empty)
+            if (!string.IsNullOrEmpty(cat?.Name))
             {
                 await SqliteRepository<Cat>.AddData(cat);
             }

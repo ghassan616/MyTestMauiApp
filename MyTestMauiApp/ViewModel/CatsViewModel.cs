@@ -2,6 +2,7 @@
 using MyTestMauiApp.Model;
 using MyTestMauiApp.Services;
 using System.Collections.ObjectModel;
+using System.Formats.Asn1;
 
 namespace MyTestMauiApp.ViewModel
 {
@@ -76,6 +77,11 @@ namespace MyTestMauiApp.ViewModel
             try
             {
                 IsBusy = true;
+                var answer = await App.Current.MainPage.DisplayAlert(title: "Delete All Cats?", message: "Are you sure you want to delete all cats?", accept: "OK", cancel: "Cancel");
+
+                if (!answer)
+                    return;
+
                 this.catService.DeleteAllCats();
             }
             catch (Exception ex)

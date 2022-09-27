@@ -16,6 +16,11 @@
             Command="{Binding AddCatCommand}"
             IsEnabled="{Binding IsNotBusy}">
         </ToolbarItem>
+        <ToolbarItem
+            Text="Delete Cats"
+            Command="{Binding DeleteAllCatsCommand}"
+            IsEnabled="{Binding IsNotBusy}">
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
     <Grid ColumnDefinitions="*,*"
           ColumnSpacing="5"
