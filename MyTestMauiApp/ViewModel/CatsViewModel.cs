@@ -16,19 +16,77 @@ namespace MyTestMauiApp.ViewModel
             this.catService = catService;
         }
 
-        async Task AddCatAsync()
+        [RelayCommand]
+        async Task AddCat()
         {
-            var newCat = new Cat
+            if (IsBusy)
+                return;
+
+            try
             {
-                Name = await App.Current.MainPage.DisplayPromptAsync(title: "Cat Breed", message: "Enter Cat Breed", placeholder: "Ex. Bengal"),
-                Location = await App.Current.MainPage.DisplayPromptAsync(title: "Cat Location", message: "Enter Cat Breed Origin Location", placeholder: "Ex. Spain"),
-                Details = await App.Current.MainPage.DisplayPromptAsync(title: "Cat Details", message: "Enter details about cat", placeholder: "Ex. This cat breed is popular in USA.")
-            };
+                IsBusy = true;
+                var newCat = new Cat
+                {
+                    Name = await App.Current.MainPage.DisplayPromptAsync(title: "Cat Breed", message: "Enter Cat Breed", placeholder: "Ex. Bengal"),
+                    Location = await App.Current.MainPage.DisplayPromptAsync(title: "Cat Location", message: "Enter Cat Breed Origin Location", placeholder: "Ex. Spain"),
+                    Details = await App.Current.MainPage.DisplayPromptAsync(title: "Cat Details", message: "Enter details about cat", placeholder: "Ex. This cat breed is popular in USA.")
+                };
+
+                this.catService.AddCat(newCat);
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error!", $"Unable to add data: {ex.Message}", "OK");
+            }
+            finally
+            {
+                await GetCats();
+                IsBusy = false;
+            }
         }
 
-        async Task DeleteCat()
+        [RelayCommand]
+        async Task DeleteCat(Cat cat)
         {
+            if (IsBusy)
+                return;
 
+            try
+            {
+                IsBusy = true;
+                this.catService.DeleteCat(cat);
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error!", $"Unable to delete data: {ex.Message}", "OK");
+            }
+            finally
+            {
+                await GetCats();
+                IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
+        async Task DeleteAllCats()
+        {
+            if (IsBusy)
+                return;
+
+            try
+            {
+                IsBusy = true;
+                this.catService.DeleteAllCats();
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error!", $"Unable to delete data: {ex.Message}", "OK");
+            }
+            finally
+            {
+                await GetCats();
+                IsBusy = false;
+            }
         }
 
         [RelayCommand]

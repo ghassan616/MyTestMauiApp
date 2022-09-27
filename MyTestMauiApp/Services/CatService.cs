@@ -9,7 +9,7 @@ namespace MyTestMauiApp.Services
 
         public async Task<IEnumerable<Cat>> GetCats()
         {
-            if (catList.Count() > 0)
+            if (catList?.Count() > 0)
             {
                 return catList;
             }
@@ -21,7 +21,7 @@ namespace MyTestMauiApp.Services
 
         public async void AddCat(Cat cat)
         {
-            if (cat != null)
+            if (cat != null && cat.Name != String.Empty)
             {
                 await SqliteRepository<Cat>.AddData(cat);
             }
@@ -30,6 +30,11 @@ namespace MyTestMauiApp.Services
         public async void DeleteCat(Cat cat)
         {
             await SqliteRepository<Cat>.RemoveData(cat.Id);
+        }
+
+        public async void DeleteAllCats()
+        {
+            await SqliteRepository<Cat>.RemoveAllData();
         }
     }
 }

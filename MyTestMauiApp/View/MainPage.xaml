@@ -10,14 +10,64 @@
     Title="Cool Catz"
     x:DataType="viewmodel:CatsViewModel">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Text="Add Cat"
+            Command="{Binding AddCatCommand}"
+            IsEnabled="{Binding IsNotBusy}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <Grid ColumnDefinitions="*,*"
           ColumnSpacing="5"
           RowDefinitions="*,Auto"
           RowSpacing="0">
-
-        <CollectionView BackgroundColor="CadetBlue">
+        <CollectionView 
+            BackgroundColor="CadetBlue"
+            Grid.ColumnSpan="2"
+            ItemsSource="{Binding Cats}"
+            >
+            <CollectionView.ItemTemplate>
+                <DataTemplate
+                    x:DataType="model:Cat">
+                    <Grid Padding="10">
+                        <Frame HeightRequest="125"
+                               Padding="0">
+                            <Grid
+                                Padding="0"
+                                ColumnDefinitions="125,*">
+                                <Image 
+                                Aspect="AspectFit"
+                                Source="cat.png"
+                                WidthRequest="125"
+                                HeightRequest="125"/>
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    Padding="10"
+                                    VerticalOptions="Center">
+                                    <Label Text="{Binding Name}"/>
+                                    <Label Text="{Binding Location}"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
 
         </CollectionView>
+        <Button 
+            Text="Get Cats"
+            Command="{Binding GetCatsCommand}"
+            IsEnabled="{Binding IsNotBusy}"
+            Grid.Row="1"
+            Margin="8"/>
+
+        <ActivityIndicator 
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="CenterAndExpand"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"/>
     </Grid>
 
 </ContentPage>

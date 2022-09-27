@@ -31,6 +31,12 @@ namespace MyTestMauiApp.Repository
             await db.DeleteAsync<T>(id);
         }
 
+        public static async Task RemoveAllData()
+        {
+            await Init();
+            await db.DeleteAllAsync<T>();
+        }
+
         public static async Task<IEnumerable<T>> GetData()
         {
             await Init();
