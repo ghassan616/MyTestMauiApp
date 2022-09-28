@@ -7,7 +7,7 @@
     xmlns:viewmodel="clr-namespace:MyTestMauiApp.ViewModel"
     xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
     ios:Page.UseSafeArea="True"
-    Title="Cool Catz"
+    Title="Cool Cats"
     x:DataType="viewmodel:CatsViewModel">
 
     <ContentPage.ToolbarItems>
@@ -29,14 +29,19 @@
         <CollectionView 
             BackgroundColor="CadetBlue"
             Grid.ColumnSpan="2"
-            ItemsSource="{Binding Cats}"
-            >
+            ItemsSource="{Binding Cats}">
             <CollectionView.ItemTemplate>
                 <DataTemplate
                     x:DataType="model:Cat">
                     <Grid Padding="10">
                         <Frame HeightRequest="125"
                                Padding="0">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CatsViewModel}}, Path=GoToCatDetailsCommand}">
+                                </TapGestureRecognizer>
+                            </Frame.GestureRecognizers>
                             <Grid
                                 Padding="0"
                                 ColumnDefinitions="125,*">

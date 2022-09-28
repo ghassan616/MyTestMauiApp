@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using MyTestMauiApp.Model;
 using MyTestMauiApp.Services;
+using MyTestMauiApp.View;
 using System.Collections.ObjectModel;
 using System.Formats.Asn1;
 
@@ -15,6 +16,19 @@ namespace MyTestMauiApp.ViewModel
         {
             Title = "Cool Catz";
             this.catService = catService;
+        }
+
+        [RelayCommand]
+        async Task GoToCatDetails(Cat cat)
+        {
+            if (cat is null)
+                return;
+
+            await Shell.Current.GoToAsync($"{nameof(CatDetailsPage)}", true,
+                new Dictionary<string, object>
+                {
+                    {"Cat", cat }
+                });
         }
 
         [RelayCommand]
@@ -111,8 +125,6 @@ namespace MyTestMauiApp.ViewModel
 
                 foreach (var cat in cats)
                     Cats.Add(cat);
-
-
             }
             catch (Exception ex)
             {
