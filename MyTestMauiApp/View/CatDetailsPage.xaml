@@ -6,18 +6,40 @@
              xmlns:viewmodel="clr-namespace:MyTestMauiApp.ViewModel"
              Title="{Binding Cat.Name}">
     <ScrollView>
-        <VerticalStackLayout>
-            <Grid
-                ColumnDefinitions="*,Auto,*"
-                RowDefinitions="160, Auto">
+        <Grid
+            ColumnDefinitions="*"
+            ColumnSpacing="5"
+            RowDefinitions="*,Auto"
+            RowSpacing="0"
+            BackgroundColor="CadetBlue">
+            <VerticalStackLayout>
+                <Grid
+                    ColumnDefinitions="*,Auto,*"
+                    RowDefinitions="160, Auto">
+                </Grid>
+                <VerticalStackLayout
+                    Padding="10"
+                    Spacing="10">
+                    <Label
+                        Text="{Binding Cat.Details}"
+                        Background="Orange"
+                        HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+            <Button 
+                Text="Share Cat"
+                Command="{Binding ShareCatCommand}"
+                IsEnabled="{Binding IsNotBusy}"
+                Grid.Row="1"
+                Margin="8"/>
 
-                <BoxView
-                    BackgroundColor="Orange"
-                    Grid.ColumnSpan="3"
-                    HeightRequest="160"
-                    HorizontalOptions="FillAndExpand">
-                </BoxView>
-            </Grid>
-        </VerticalStackLayout>
+            <ActivityIndicator 
+                IsVisible="{Binding IsBusy}"
+                IsRunning="{Binding IsBusy}"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="CenterAndExpand"
+                Grid.RowSpan="2"
+                Grid.ColumnSpan="2"/>
+        </Grid>
     </ScrollView>
 </ContentPage>

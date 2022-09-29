@@ -14,7 +14,6 @@ namespace MyTestMauiApp.ViewModel
 
         public CatsViewModel(CatService catService)
         {
-            Title = "Cool Catz";
             this.catService = catService;
         }
 
