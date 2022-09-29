@@ -11,11 +11,8 @@ namespace MyTestMauiApp.ViewModel
         [ObservableProperty]
         Cat cat;
 
-        IEmail emailService;
-
-        public CatDetailsViewModel(IEmail emailService)
+        public CatDetailsViewModel()
         {
-            this.emailService = emailService;
         }
 
         [RelayCommand]
